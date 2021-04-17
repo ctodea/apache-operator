@@ -1,0 +1,20 @@
+# permissions for end users to view apaches.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: apache-viewer-role
+rules:
+- apiGroups:
+  - web.quay.io
+  resources:
+  - apaches
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - web.quay.io
+  resources:
+  - apaches/status
+  verbs:
+  - get

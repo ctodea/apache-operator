@@ -37,4 +37,21 @@ rules:
       - patch
       - update
       - watch
+  ##
+  ## Rules for web.quay.io/v1alpha1, Kind: Apache
+  ##
+  - apiGroups:
+      - web.quay.io
+    resources:
+      - apaches
+      - apaches/status
+      - apaches/finalizers
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
 #+kubebuilder:scaffold:rules
