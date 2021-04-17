@@ -57,3 +57,5 @@ only 8.228GB of memory found (9.664GB required)
 ```
 
 9. get crc running on desktop
+
+10. follow howto's for operators with ansible. `ctodea@ctsm:~/git/apache-operator$ make docker-build docker-push IMG="quay.io/ctodea/apache-operator:v0.0.1"`
