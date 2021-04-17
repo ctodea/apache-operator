@@ -1,0 +1,11 @@
+Therefore we would kindly ask you to create a basic Ansible Operator with the following functionality:
+
+* Deploy an apache webserver (Amount of replicas defined by CustomResource)
+* Create a Route/Ingress containing a Name defined in the CustomResource
+- The Pods should serve a simple HTML File (Either defined in CustomResource or ConfigMaps
+- Apache configuration should be rendered from a template and saved into a configMap
+
+The following parameter should be configurable via CustomResource:
+* Port apache listens on (rendered in apache.conf and service)
+
+If a change to the configMap happens the operator should also trigger a redeployment of the webserver.

@@ -46,7 +46,7 @@ So I'm switching from minishift to CodeReady Containers.
 
 7. register at https://cloud.redhat.com/openshift/create/local and get CodeReady Containers.
 
-8. cry. Actually I think 3.11 would suffice for now, i dont think it'll be a huge difference, so i'll start developing in 3.11 with minishift.
+8. cry. Actually I think 3.11 would suffice for now, i dont think it'll be a huge difference, so i'll start developing in 3.11 with minishift if crc does not cooperate.
 ```sh
 ctodea@TPL450:~/Downloads$ sudo mv crc /usr/local/bin/
 [sudo] password for ctodea:
@@ -55,3 +55,5 @@ Successfully configured consent-telemetry to no
 ctodea@TPL450:~/Downloads$ crc start
 only 8.228GB of memory found (9.664GB required)
 ```
+
+9. get crc running on desktop
