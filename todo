@@ -9,3 +9,6 @@ The following parameter should be configurable via CustomResource:
 * Port apache listens on (rendered in apache.conf and service)
 
 If a change to the configMap happens the operator should also trigger a redeployment of the webserver.
+
+
+- add OLM bundle 
