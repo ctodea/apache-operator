@@ -3,4 +3,4 @@ kind: Apache
 metadata:
   name: apache-sample
 spec:
-  foo: bar
+  size: 3

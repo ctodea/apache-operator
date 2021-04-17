@@ -22,6 +22,7 @@
             containers:
             - name: apache
               # default entrypoint for now, default "It works" page served
+              # The key-value pairs in the Custom Resource spec are passed to Ansible as extra variables.
               # command:
               # - httpd
               # - -m=64
