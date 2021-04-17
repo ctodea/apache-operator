@@ -1,4 +1,4 @@
-apiVersion: web.quay.io/v1alpha1
+apiVersion: web.example.com/v1alpha1
 kind: Apache
 metadata:
   name: apache-sample

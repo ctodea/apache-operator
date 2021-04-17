@@ -1,5 +1,5 @@
 ---
-- name: Create the web.quay.io/v1alpha1.Apache
+- name: Create the web.example.com/v1alpha1.Apache
   k8s:
     state: present
     namespace: '{{ namespace }}'

@@ -2,9 +2,9 @@
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-  name: apaches.web.quay.io
+  name: apaches.web.example.com
 spec:
-  group: web.quay.io
+  group: web.example.com
   names:
     kind: Apache
     listKind: ApacheList

@@ -38,10 +38,10 @@ rules:
       - update
       - watch
   ##
-  ## Rules for web.quay.io/v1alpha1, Kind: Apache
+  ## Rules for web.example.com/v1alpha1, Kind: Apache
   ##
   - apiGroups:
-      - web.quay.io
+      - web.example.com
     resources:
       - apaches
       - apaches/status
