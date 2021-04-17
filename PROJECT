@@ -1,4 +1,4 @@
-domain: quay.io
+domain: quay.io/ctodea
 layout:
 - ansible.sdk.operatorframework.io/v1
 plugins:
@@ -9,7 +9,7 @@ resources:
 - api:
     crdVersion: v1
     namespaced: true
-  domain: quay.io
+  domain: quay.io/ctodea
   group: web
   kind: Apache
   version: v1alpha1
