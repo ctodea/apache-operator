@@ -8,7 +8,7 @@
         name: '{{ ansible_operator_meta.name }}-apache'
         namespace: '{{ ansible_operator_meta.namespace }}'
       spec:
-        replicas: "{{size}}"
+        replicas: '{{ size }}'
         selector:
           matchLabels:
             app: apache
@@ -48,26 +48,30 @@
             port: 80
             targetPort: 80 # to be parametrized
 
-- name: create configmap
+- name: create html configmap
   community.kubernetes.k8s:
     definition:
       apiVersion: v1
       kind: ConfigMap
       metadata:
-        name: '{{ ansible_operator_meta.name }}-apache'
+        name: '{{ ansible_operator_meta.name }}-apache-html'
         namespace: '{{ ansible_operator_meta.namespace }}'
       data:
-        index.html: |-
-          <html>
-              <body>
-                  <h1>
-                      Morty has some sick moves!
-                  </h1>
-              <img src="https://cdn.eldeforma.com/wp-content/uploads/2020/11/1509888664_5eY6d.gif" width=250/>
-              </body>
-          </html>
+        index.html: '{{ index_html }}' # key will define file name
 
-      
+- name: create httpd.conf configmap
+  community.kubernetes.k8s:
+    definition:
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: '{{ ansible_operator_meta.name }}-apache-conf'
+        namespace: '{{ ansible_operator_meta.namespace }}'
+      data:
+        httpd.conf: '{{ rendered_template }}'
+  vars:
+    rendered_template: "{{ lookup('template', './httpd.conf.j2') }}"
+
 
 # kind: Route
 # apiVersion: route.openshift.io/v1

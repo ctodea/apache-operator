@@ -5,13 +5,12 @@ metadata:
   namespace: apache-operator-system # to be changed
 spec:
   size: 3
-  # page_html: >
-  #   <html>
-  #       <body>
-  #           <h1>
-  #               Morty has some sick moves!
-  #           </h1>
-  #       <img src="https://cdn.eldeforma.com/wp-content/uploads/2020/11/1509888664_5eY6d.gif" width=250/>
-  #       </body>
-  #   </html>
-
+  route_name: 'cloudwerkstatt'
+  index_html: |-
+    <html>
+      <body>
+        <h1>Morty has some sick moves!</h1>
+        <img src="https://cdn.eldeforma.com/wp-content/uploads/2020/11/1509888664_5eY6d.gif" width=250/>
+      </body>
+    </html>
+  apache_port: 8080

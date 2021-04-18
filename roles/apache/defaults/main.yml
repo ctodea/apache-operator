@@ -1,4 +1,6 @@
 ---
 # defaults file for Apache
 size: 1
-apache_port: 80
+apache_port: 8080
+route_name: 'sample'
+index_html: '<html><body><h1>IT WORKS</body></html>'
