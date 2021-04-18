@@ -22,4 +22,4 @@
             - name: apache
               image: "httpd:alpine"
               ports:
-                - containerPort: 11211
+                - containerPort: 80
