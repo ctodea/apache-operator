@@ -24,7 +24,7 @@
                 - containerPort: 11211 # to be parametrized
               volumeMounts:
                - name: html
-                 mountPath: "/var/www/html/index.html"
+                 mountPath: "/var/www/html/"
                  readOnly: true
             volumes:
                 - name: html
