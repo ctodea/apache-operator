@@ -10,10 +10,12 @@ rules:
   - apiGroups:
       - ""
     resources:
+      - secrets
       - pods
       - pods/exec
       - pods/log
       - services # allow managing services
+      - configmaps # allow managing configmaps
       - routes # allow managing routes
     verbs:
       - create

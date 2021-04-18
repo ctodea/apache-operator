@@ -2,6 +2,7 @@ apiVersion: web.example.com/v1alpha1
 kind: Apache
 metadata:
   name: sample
+  namespace: apache-operator-system # to be changed
 spec:
   size: 3
   # page_html: >

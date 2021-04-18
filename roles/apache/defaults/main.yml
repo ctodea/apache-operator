@@ -1,4 +1,4 @@
 ---
 # defaults file for Apache
 size: 1
-httpd_port: 80
+apache_port: 80
