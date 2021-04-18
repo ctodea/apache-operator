@@ -29,6 +29,7 @@ spec:
         - --leader-elect
         - --leader-election-id=apache-operator
         image: controller:latest
+        imagePullPolicy: Always # remove me?
         name: manager
         env:
         - name: ANSIBLE_GATHERING
