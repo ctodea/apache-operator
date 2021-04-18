@@ -83,3 +83,5 @@ oc import-image rhscl/httpd-24-rhel7 --from=registry.access.redhat.com/rhscl/htt
 https://catalog.redhat.com/software/containers/rhscl/httpd-24-rhel7/57ea8d049c624c035f96f42e?container-tabs=overview&gti-tabs=unauthenticatedc
 
 14. add config map with HTML, service to ansible's deployment. Mount the html from the configmap into the container, to be the index.html
+
+15. add cm for httpd.conf
