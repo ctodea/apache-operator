@@ -59,3 +59,27 @@ only 8.228GB of memory found (9.664GB required)
 9. get crc running on desktop
 
 10. follow howto's for operators with ansible. `ctodea@ctsm:~/git/apache-operator$ make docker-build docker-push IMG="quay.io/ctodea/apache-operator:v0.0.1"`
+
+11. dev and test a lot
+
+12. modify controller role to allow creating services and routes.
+
+13. change image to ctodea@ctsm:~$ docker pull registry.access.redhat.com/rhscl/httpd-24-rhel7
+Using default tag: latest
+latest: Pulling from rhscl/httpd-24-rhel7
+b77f42d650dc: Pull complete 
+a858833a9239: Pull complete 
+608083cad012: Pull complete 
+a4914c5316bf: Pull complete 
+Digest: sha256:0cd55bc708b656e63f1db25e7ae8079b7b41398f11b936c9e7cd17cd286251e7
+Status: Downloaded newer image for registry.access.redhat.com/rhscl/httpd-24-rhel7:latest
+registry.access.redhat.com/rhscl/httpd-24-rhel7:latest
+ctodea@ctsm:~$ docker tag registry.access.redhat.com/rhscl/httpd-24-rhel7 rhscl/httpd-24-rhel7
+ctodea@ctsm:~$ docker run -itd rhscl/httpd-24-rhel7
+deee489c7bface51087ec5513e403a23c6925919265ac1bc1bc7ace832c1a7d1
+
+
+oc import-image rhscl/httpd-24-rhel7 --from=registry.access.redhat.com/rhscl/httpd-24-rhel7 --confirm # to import it within my test cluster
+https://catalog.redhat.com/software/containers/rhscl/httpd-24-rhel7/57ea8d049c624c035f96f42e?container-tabs=overview&gti-tabs=unauthenticatedc
+
+14. add config map with HTML, service to ansible's deployment. Mount the html from the configmap into the container, to be the index.html
