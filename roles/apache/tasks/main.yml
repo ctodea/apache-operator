@@ -8,6 +8,8 @@
       metadata:
         name: '{{ ansible_operator_meta.name }}-apache'
         namespace: '{{ ansible_operator_meta.namespace }}'
+        labels:
+          app: apache
       spec:
         replicas: '{{ size }}'
         selector:
@@ -31,7 +33,6 @@
                   #   mountPath: "/etc/httpd/conf/httpd.conf"
                   #   subPath: "httpd.conf"
                   #   readOnly: false # apache writes some stuff on /etc/httpd/conf
-
             volumes:
               - name: html
                 configMap:
@@ -74,6 +75,8 @@
       metadata:
         name: '{{ ansible_operator_meta.name }}-apache'
         namespace: '{{ ansible_operator_meta.namespace }}'
+        labels:
+          app: apache
       spec:
         selector:
           app: apache
@@ -91,8 +94,24 @@
         name: '{{ ansible_operator_meta.name }}-apache'
         namespace: '{{ ansible_operator_meta.namespace }}'
       spec:
-        host: '{{ route_name }}-apache-operator-system.apps-crc.testing'
+        host: '{{ route_name }}-apache-operator-system.apps-crc.testing' # default: <route-name>[-<namespace>].<suffix> explicitly define so it can be changed later, this line could be ommited
         to:
           kind: Service
           name: '{{ ansible_operator_meta.name }}-apache'
-        wildcardPolicy: None
+        # route could be secured further...
+        # tls:
+        #   termination: edge            
+        #   insecureEdgeTerminationPolicy: Allow | Redirect
+        #   key: |-                      
+        #     -----BEGIN PRIVATE KEY-----
+        #     [...]
+        #     -----END PRIVATE KEY-----
+        #   certificate: |-              
+        #     -----BEGIN CERTIFICATE-----
+        #     [...]
+        #     -----END CERTIFICATE-----
+        #   caCertificate: |-            
+        #     -----BEGIN CERTIFICATE-----
+        #     [...]
+        #     -----END CERTIFICATE-----
+

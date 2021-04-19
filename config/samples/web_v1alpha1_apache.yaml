@@ -4,8 +4,8 @@ metadata:
   name: sample
   namespace: apache-operator-system # to be changed
 spec:
-  size: 3
-  route_name: 'cloudwerkstatt'
+  size: 10
+  route_name: 'cloudwerkstatt' # read route definition for more details: apache-operator/roles/apache/tasks/main.yml 
   index_html: |-
     <html>
       <body>
