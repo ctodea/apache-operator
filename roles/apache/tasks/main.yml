@@ -24,21 +24,24 @@
               - name: apache
                 image: "rhscl/httpd-24-rhel7"
                 ports:
-                  - containerPort: 8080 # to be parametrized
+                  - containerPort: '{{ apache_port }}' 
                 volumeMounts:
                   - name: html
                     mountPath: "/var/www/html/"
                     readOnly: true
-                  # - name: conf
-                  #   mountPath: "/etc/httpd/conf/httpd.conf"
-                  #   subPath: "httpd.conf"
-                  #   readOnly: false # apache writes some stuff on /etc/httpd/conf
+                  - name: conf
+                    mountPath: "/etc/httpd/httpd.conf"
+                    readOnly: false # apache writes some stuff on /etc/httpd/conf
+                  # https://access.redhat.com/solutions/4615501
+                  # https://stackoverflow.com/a/44824976/3763807
+                  # sed writes some temp file into /etc/httpd/conf.d/
             volumes:
               - name: html
                 configMap:
                   name: '{{ ansible_operator_meta.name }}-apache-html' # name of the html configmap
               - name: conf
                 configMap:
+                  defaultMode: 420
                   name: '{{ ansible_operator_meta.name }}-apache-conf' # name of the conf configmap
                     
 ### config
@@ -83,7 +86,7 @@
         ports:
           - protocol: TCP
             port: 80
-            targetPort: 8080 # to be parametrized
+            targetPort: '{{ apache_port }}' 
 
 - name: create route
   community.kubernetes.k8s:
