@@ -16,7 +16,6 @@ rules:
       - pods/log
       - services # allow managing services
       - configmaps # allow managing configmaps
-      - routes # allow managing routes
     verbs:
       - create
       - delete
@@ -40,6 +39,14 @@ rules:
       - patch
       - update
       - watch
+  - apiGroups: # allow operator to manage routes
+      - route.openshift.io
+    resources:
+      - routes
+      - routes/custom-host # https://stackoverflow.com/a/61907374/3763807
+    verbs:
+      - '*' # can be narrowed down for more security, if required
+
   ##
   ## Rules for web.example.com/v1alpha1, Kind: Apache
   ##
