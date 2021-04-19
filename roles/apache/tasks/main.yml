@@ -1,4 +1,5 @@
 ---
+### workload
 - name: start apache
   community.kubernetes.k8s:
     definition:
@@ -21,14 +22,15 @@
               - name: apache
                 image: "rhscl/httpd-24-rhel7"
                 ports:
-                  - containerPort: 11211 # to be parametrized
+                  - containerPort: 8080 # to be parametrized
                 volumeMounts:
                   - name: html
                     mountPath: "/var/www/html/"
                     readOnly: true
-                  - name: conf
-                    mountPath: "/etc/httpd/conf/"  
-                    readOnly: false # apache writes some stuff on /etc/httpd/conf
+                  # - name: conf
+                  #   mountPath: "/etc/httpd/conf/httpd.conf"
+                  #   subPath: "httpd.conf"
+                  #   readOnly: false # apache writes some stuff on /etc/httpd/conf
 
             volumes:
               - name: html
@@ -38,22 +40,7 @@
                 configMap:
                   name: '{{ ansible_operator_meta.name }}-apache-conf' # name of the conf configmap
                     
-- name: create service
-  community.kubernetes.k8s:
-    definition:
-      apiVersion: v1
-      kind: Service
-      metadata:
-        name: '{{ ansible_operator_meta.name }}-apache'
-        namespace: '{{ ansible_operator_meta.namespace }}'
-      spec:
-        selector:
-          app: apache
-        ports:
-          - protocol: TCP
-            port: 80
-            targetPort: 80 # to be parametrized
-
+### config
 - name: create html configmap
   community.kubernetes.k8s:
     definition:
@@ -78,6 +65,22 @@
   vars:
     rendered_template: "{{ lookup('template', './httpd.conf.j2') }}"
 
+### networking
+- name: create service
+  community.kubernetes.k8s:
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: '{{ ansible_operator_meta.name }}-apache'
+        namespace: '{{ ansible_operator_meta.namespace }}'
+      spec:
+        selector:
+          app: apache
+        ports:
+          - protocol: TCP
+            port: 80
+            targetPort: 8080 # to be parametrized
 
 - name: create route
   community.kubernetes.k8s:
@@ -91,8 +94,5 @@
         host: '{{ route_name }}-apache-operator-system.apps-crc.testing'
         to:
           kind: Service
-          name: sample-apache
-          weight: 100
-        port:
-          targetPort: 80
+          name: '{{ ansible_operator_meta.name }}-apache'
         wildcardPolicy: None
