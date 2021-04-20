@@ -1,6 +1,6 @@
 ServerRoot "/opt/rh/httpd24/root/etc/httpd"
 
-Listen 0.0.0.0:'{{ apache_port }}'
+Listen 0.0.0.0:{{ apache_port }}
 
 Include conf.modules.d/*.conf
 
