@@ -25,3 +25,4 @@ If a change to the configMap happens the operator should also trigger a redeploy
             name: sstest
             
  but with different name for httpd.conf
+- try watches.yml with configmap and handler
