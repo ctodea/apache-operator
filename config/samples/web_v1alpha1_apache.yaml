@@ -5,6 +5,7 @@ metadata:
   namespace: apache-operator-system # to be changed
   annotations:
     ansible.operator-sdk/reconcile-period: "30s"
+    ansible.sdk.operatorframework.io/verbosity: "4"
 spec:
   size: 3
   route_name: 'cloudwerkstatt' # read route definition for more details: apache-operator/roles/apache/tasks/main.yml 
