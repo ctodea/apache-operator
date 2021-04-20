@@ -20,3 +20,9 @@ do its stuff on it.
             
  but with different name for httpd.conf
 - try watches.yml with configmap and handler
+
+
+- move magic out of /etc/httpd/conf
+
+- this may be gold: https://blog.questionable.services/article/kubernetes-deployments-configmap-change/
+

@@ -5,3 +5,11 @@
   kind: Apache
   role: apache
 #+kubebuilder:scaffold:watch
+# - version: v1
+#   group: 
+#   kind: ConfigMap
+#   role: apache
+#   selector:
+#     matchLabels:
+#       conf: httpdconf
+    

@@ -8,6 +8,9 @@
       metadata:
         name: '{{ ansible_operator_meta.name }}-apache-html'
         namespace: '{{ ansible_operator_meta.namespace }}'
+        labels:
+          app: apache
+          conf: html
       data:
         index.html: '{{ index_html }}' # key will define file name
 
@@ -19,12 +22,15 @@
       metadata:
         name: '{{ ansible_operator_meta.name }}-apache-conf'
         namespace: '{{ ansible_operator_meta.namespace }}'
+        labels:
+          app: apache
+          conf: httpdconf
       data:
         httpd.conf: '{{ rendered_template }}'
   vars:
     rendered_template: "{{ lookup('template', './httpd.conf.j2') }}"
 
-  ### workload
+### workload
 - name: start apache
   community.kubernetes.k8s:
     definition:
@@ -44,6 +50,8 @@
           metadata:
             labels:
               app: apache
+            annotations:
+              configHash: "" # we will store the hash of the configmap here
           spec:
             initContainers:
               - name: httpdconf
@@ -64,13 +72,22 @@
                     mountPath: "/var/www/html/"
                     readOnly: true
                   - name: confdir
-                    mountPath: "/etc/httpd/conf"
+                    mountPath: "/etc/httpd/conf/"
                     readOnly: false # apache writes some stuff on /etc/httpd/conf
-                  # https://access.redhat.com/solutions/4615501
-                  # https://stackoverflow.com/a/44824976/3763807
-                  # sed writes some temp file into /etc/httpd/conf.d/
+                envFrom:
+                # The ConfigMap we want to use
+                - configMapRef:
+                    name: confmap
+                # Extra-curricular: We can make the hash of our ConfigMap available at a
+                # (e.g.) debug endpoint via a fieldRef
+                # env:
+                #   - name: CONFIG_HASH
+                #     valueFrom:
+                #       fieldRef:
+                #         fieldPath: spec.template.metadata.annotations.configHash
             volumes:
               - name: confdir
+                defaultMode: 0666
                 emptyDir: {}
               - name: html
                 configMap:
@@ -78,6 +95,8 @@
               - name: confmap
                 configMap:
                   name: '{{ ansible_operator_meta.name }}-apache-conf' # name of the conf configmap
+  tags: 
+  - deployment
                     
 ### networking
 - name: create service
@@ -96,8 +115,10 @@
         ports:
           - protocol: TCP
             port: 80
-            targetPort: '{{ apache_port }}' 
-
+            targetPort: '{{ apache_port }}'
+  tags: 
+    - service
+                
 - name: create route
   community.kubernetes.k8s:
     definition:
@@ -127,4 +148,9 @@
         #     -----BEGIN CERTIFICATE-----
         #     [...]
         #     -----END CERTIFICATE-----
+  tags:
+    - route 
+
+- name: get configmap hash
+  
 
