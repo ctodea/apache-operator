@@ -13,3 +13,15 @@ If a change to the configMap happens the operator should also trigger a redeploy
 
 - add OLM bundle 
 - fix manager_auth_proxy_patch.yaml `Error: container create failed: time="2021-04-17T17:21:39Z" level=error msg="container_linux.go:366: starting container process caused: chdir to cwd (\"/home/nonroot\") set in config.json failed: permission denied"
+- make handler check httpdconfig
+- try           
+          volumeMounts:
+            - name: test
+              mountPath: /etc/apache2/conf-enabled/test.conf
+              subPath: test.conf
+      volumes:
+        - name: test
+          configMap:
+            name: sstest
+            
+ but with different name for httpd.conf
