@@ -26,3 +26,6 @@ do its stuff on it.
 
 - this may be gold: https://blog.questionable.services/article/kubernetes-deployments-configmap-change/
 
+- make sure which verbs are used in the role and shrink them as much as possible, the lower the permissions the better.
+
+- redeploy if the html config map changes doesnt make much sense, since httpd servers the new HTML on the flight

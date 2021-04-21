@@ -29,6 +29,7 @@
         httpd.conf: '{{ rendered_template }}'
   vars:
     rendered_template: "{{ lookup('template', './httpd.conf.j2') }}"
+  register: result
 
 ### workload
 - name: start apache
@@ -74,10 +75,10 @@
                   - name: confdir
                     mountPath: "/etc/httpd/conf/"
                     readOnly: false # apache writes some stuff on /etc/httpd/conf
-                envFrom:
-                # The ConfigMap we want to use
-                - configMapRef:
-                    name: confmap
+                # envFrom:
+                # # The ConfigMap we want to use
+                # - configMapRef:
+                #     name: confmap
                 # Extra-curricular: We can make the hash of our ConfigMap available at a
                 # (e.g.) debug endpoint via a fieldRef
                 # env:
@@ -151,6 +152,20 @@
   tags:
     - route 
 
-- name: get configmap hash
+# - name: get configmap hash
+#   community.kubernetes.k8s_info:
+#     kind: ConfigMap
+#     name: '{{ ansible_operator_meta.name }}-apache'
+#     namespace: '{{ ansible_operator_meta.namespace }}'
+#   register: configmap
+#   tags:
+#     - configmap_hash
+
+- copy: content="{{ result }}" dest=/opt/ansible/configmap
+
+
+  
+
+    
   
 
