@@ -29,3 +29,14 @@ do its stuff on it.
 - make sure which verbs are used in the role and shrink them as much as possible, the lower the permissions the better.
 
 - redeploy if the html config map changes doesnt make much sense, since httpd servers the new HTML on the flight
+
+- configmap need to be excluded from the watcher otherwise reonciliation would overwrite any manual changes:
+    # ConfigMaps owned by a Memcached CR will not be watched or cached.
+    - version: v1alpha1
+    group: cache.example.com
+    kind: Memcached
+    role: /opt/ansible/roles/memcached
+    blacklist:
+        - group: ""
+        version: v1
+        kind: ConfigMap
