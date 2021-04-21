@@ -29,7 +29,7 @@
         httpd.conf: '{{ rendered_template }}'
   vars:
     rendered_template: "{{ lookup('template', './httpd.conf.j2') }}"
-  register: result
+  register: configmap_result
 
 ### workload
 - name: start apache
@@ -161,10 +161,8 @@
 #   tags:
 #     - configmap_hash
 
-- copy: content="{{ result }}" dest=/opt/ansible/configmap
+- copy: content="{{ configmap_result.result.metadata.resourceVersion }}" dest=/opt/ansible/configmap
 
-
-  
 
     
   
