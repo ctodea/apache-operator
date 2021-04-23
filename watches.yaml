@@ -4,10 +4,10 @@
   group: web.example.com
   kind: Apache
   role: apache
-  blacklist:
-    - group: ""
-      version: v1
-      kind: ConfigMap
+  # blacklist: # prevent configmap from reconciling
+  #   - group: ""
+  #     version: v1
+  #     kind: ConfigMap
 
 #+kubebuilder:scaffold:watch
 # - version: v1

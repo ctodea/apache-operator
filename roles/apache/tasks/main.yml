@@ -40,6 +40,8 @@
       metadata:
         name: '{{ ansible_operator_meta.name }}-apache'
         namespace: '{{ ansible_operator_meta.namespace }}'
+        annotations:
+          configResouceVersion: "{{ configmap_result.result.metadata.resourceVersion }}" # we will store the resourceVersion of the configmap here
         labels:
           app: apache
       spec:
@@ -51,8 +53,6 @@
           metadata:
             labels:
               app: apache
-            annotations:
-              configHash: "" # we will store the hash of the configmap here
           spec:
             initContainers:
               - name: httpdconf
@@ -75,20 +75,9 @@
                   - name: confdir
                     mountPath: "/etc/httpd/conf/"
                     readOnly: false # apache writes some stuff on /etc/httpd/conf
-                # envFrom:
-                # # The ConfigMap we want to use
-                # - configMapRef:
-                #     name: confmap
-                # Extra-curricular: We can make the hash of our ConfigMap available at a
-                # (e.g.) debug endpoint via a fieldRef
-                # env:
-                #   - name: CONFIG_HASH
-                #     valueFrom:
-                #       fieldRef:
-                #         fieldPath: spec.template.metadata.annotations.configHash
             volumes:
               - name: confdir
-                defaultMode: 0666
+                defaultMode: 0666 # test lower permissions
                 emptyDir: {}
               - name: html
                 configMap:
@@ -160,10 +149,3 @@
 #   register: configmap
 #   tags:
 #     - configmap_hash
-
-- copy: content="{{ configmap_result.result.metadata.resourceVersion }}" dest=/opt/ansible/configmap
-
-
-    
-  
-
